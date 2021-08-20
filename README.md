@@ -22,7 +22,7 @@ You can specify placeholders in the message and fill them up with parameters val
 
 Result: `E-TEST-2: Unknown input 'unknown'.`
 
-`ParameterWithDescription(name, value, description)` method also gets a parameter description which will be used to generate a parameter description.
+`ParameterWithDescription(name, value, description)` method also gets a parameter description which will be used to generate a parameter description for the error-catalog.
 
 The builder automatically quotes parameters (depending on the type of the parameter) with single quotes.
 
