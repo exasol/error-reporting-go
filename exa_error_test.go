@@ -26,20 +26,8 @@ func (suite *ExaErrorTestSuite) TestErrorCodeWithStringParameter() {
 
 func (suite *ExaErrorTestSuite) TestErrorCodeWithParameterDescription() {
 	renderedString := ExaError("E-TEST-2").Message("Unknown input {{input}}.").
-		Parameter("input", "unknown", "Input parameter.").String()
+		ParameterWithDescription("input", "unknown", "Input parameter.").String()
 	suite.Equal("E-TEST-2: Unknown input 'unknown'.", renderedString)
-}
-
-func (suite *ExaErrorTestSuite) TestErrorCodeWithWrongParameterDescription() {
-	suite.Panics(func() { ExaError("E-TEST-2").Parameter("input", "unknown", 10) })
-}
-
-func (suite *ExaErrorTestSuite) TestErrorCodeWithWrongParameterName() {
-	suite.Panics(func() { ExaError("E-TEST-2").Parameter(nil, "unknown") })
-}
-
-func (suite *ExaErrorTestSuite) TestErrorCodeWithTooFewValues() {
-	suite.Panics(func() { ExaError("E-TEST-2").Parameter("unknown") })
 }
 
 func (suite *ExaErrorTestSuite) TestErrorCodeWithNilParameter() {
