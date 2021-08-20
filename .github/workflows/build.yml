@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        go: [ "1.13", "1.17" ]
+        go: [ "1.14", "1.15", "1.16" ]
     name: Build with go version ${{ matrix.go }}
     runs-on: ubuntu-latest
     steps:
