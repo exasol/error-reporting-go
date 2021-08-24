@@ -5,3 +5,4 @@ Code name: Initial implementation
 ## Features
 
 * #1: Added initial implementation.
+* #3: Added unquoted parameter support.
