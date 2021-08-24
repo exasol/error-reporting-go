@@ -47,3 +47,20 @@ func (suite *ExaErrorTestSuite) TestErrorCodeWithMitigation() {
 		Mitigation("Delete something.").String()
 	suite.Equal("E-TEST-2: Too little disk space. Delete something.", renderedString)
 }
+
+func (suite *ExaErrorTestSuite) TestErrorCodeWithUnquotedParameter() {
+	renderedString := ExaError("E-TEST-2").Message("Unknown input {{input|uq}}.").
+		Parameter("input", 2).String()
+	suite.Equal("E-TEST-2: Unknown input 2.", renderedString)
+}
+
+func (suite *ExaErrorTestSuite) TestErrorCodeWithMissingParameter() {
+	renderedString := ExaError("E-TEST-2").Message("Unknown input {{input}}.").String()
+	suite.Equal("E-TEST-2: Unknown input {{input}}.", renderedString)
+}
+
+func (suite *ExaErrorTestSuite) TestErrorCodeWithMissingParameterDefinition() {
+	renderedString := ExaError("E-TEST-2").Message("Unknown input.").
+		Parameter("input", 2).String()
+	suite.Equal("E-TEST-2: Unknown input.", renderedString)
+}

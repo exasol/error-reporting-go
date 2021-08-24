@@ -57,6 +57,7 @@ func formatMessage(builder *ErrorMessageBuilder) string {
 	var formattedMessage = builder.message
 	for _, parameter := range builder.parameters {
 		formattedMessage = strings.Replace(formattedMessage, "{{"+parameter.name+"}}", "'"+parameter.value+"'", -1)
+		formattedMessage = strings.Replace(formattedMessage, "{{"+parameter.name+"|uq}}", parameter.value, -1)
 	}
 	return formattedMessage
 }
