@@ -34,8 +34,7 @@ func (builder *ErrorMessageBuilder) Parameter(name string, value interface{}) *E
 }
 
 func (builder *ErrorMessageBuilder) ParameterWithDescription(name string, value interface{}, description string) *ErrorMessageBuilder {
-	builder.Parameter(name, value)
-	return builder
+	return builder.Parameter(name, value)
 }
 
 func (builder *ErrorMessageBuilder) Mitigation(mitigation string) *ErrorMessageBuilder {
