@@ -53,6 +53,10 @@ func (builder *ErrorMessageBuilder) String() string {
 	return stringBuilder.String()
 }
 
+func (builder *ErrorMessageBuilder) Error() string  {
+    return builder.String()
+}
+
 func formatMessage(builder *ErrorMessageBuilder) string {
 	var formattedMessage = builder.message
 	for _, parameter := range builder.parameters {
