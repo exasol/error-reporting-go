@@ -12,6 +12,16 @@ renderedString := error_reporting_go.ExaError("E-TEST-1").Message("Something wen
 
 Result: `E-TEST-1: Something went wrong.`
 
+### As native go error
+
+```go
+err := error_reporting_go.ExaError("E-TEST-1").Message("Something went wrong.")
+fmt.Println(err)  // fmt package can print errors automatically 
+fmt.Println(err.Error())  // Print error message explicit via Error() function
+```
+
+Result: `E-TEST-1: Something went wrong.`
+
 ### Parameters
 
 You can specify placeholders in the message and fill them up with parameters values:
