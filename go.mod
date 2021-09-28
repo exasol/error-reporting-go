@@ -1,4 +1,4 @@
-module error-reporting-go
+module github.com/exasol/error-reporting-go
 
 go 1.16
 
