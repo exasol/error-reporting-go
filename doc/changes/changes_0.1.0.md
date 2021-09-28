@@ -6,3 +6,4 @@ Code name: Initial implementation
 
 * #1: Added initial implementation.
 * #3: Added unquoted parameter support.
+* #7: Added go error interface.

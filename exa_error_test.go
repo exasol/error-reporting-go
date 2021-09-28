@@ -64,3 +64,12 @@ func (suite *ExaErrorTestSuite) TestErrorCodeWithMissingParameterDefinition() {
 		Parameter("input", 2).String()
 	suite.Equal("E-TEST-2: Unknown input.", renderedString)
 }
+
+func (suite *ExaErrorTestSuite) TestShouldImplementErrorInterface() {
+	err := ExaError("E-TEST-2").Message("Unknown input.").
+		Parameter("input", 2)
+
+	suite.Error(err, "Error should not be nil")
+	suite.EqualError(err, "E-TEST-2: Unknown input.")
+
+}
