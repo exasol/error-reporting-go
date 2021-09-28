@@ -1,6 +1,6 @@
-# Go Error Reporting, released 2021-09-28
+# Go Error Reporting v0.1.0, released 2021-09-28
 
-Code name: Initial implementation 
+Code name: Initial implementation
 
 ## Features
 
