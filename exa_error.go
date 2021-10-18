@@ -1,11 +1,14 @@
-package error_reporting_go
+package exaerror
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 )
 
-type ErrorMessageBuilder struct {
+
+
+type ExaError struct {
 	errorCode  string
 	message    string
 	parameters []parameter
@@ -17,32 +20,45 @@ type parameter struct {
 	value string
 }
 
-func ExaError(errorCode string) *ErrorMessageBuilder {
-	return &ErrorMessageBuilder{
+func New(errorCode string) *ExaError {
+	return &ExaError{
 		errorCode: errorCode,
 	}
 }
 
-func (builder *ErrorMessageBuilder) Message(message string) *ErrorMessageBuilder {
+func (builder *ExaError) Message(message string) *ExaError {
 	builder.message = message
 	return builder
 }
 
-func (builder *ErrorMessageBuilder) Parameter(name string, value interface{}) *ErrorMessageBuilder {
+func (builder *ExaError) Messagef(format string, a ...interface{}) *ExaError {
+	builder.message = format
+	rex := regexp.MustCompile(`{{(.*?)}}`)
+	paramNames := rex.FindAllStringSubmatch(format, -1)
+
+	for i, param := range a {
+		if i < len(paramNames) {
+			_ = builder.Parameter(paramNames[i][1], param)
+		}
+	}
+	return builder
+}
+
+func (builder *ExaError) Parameter(name string, value interface{}) *ExaError {
 	builder.parameters = append(builder.parameters, parameter{name, fmt.Sprintf("%v", value)})
 	return builder
 }
 
-func (builder *ErrorMessageBuilder) ParameterWithDescription(name string, value interface{}, description string) *ErrorMessageBuilder {
+func (builder *ExaError) ParameterWithDescription(name string, value interface{}, description string) *ExaError {
 	return builder.Parameter(name, value)
 }
 
-func (builder *ErrorMessageBuilder) Mitigation(mitigation string) *ErrorMessageBuilder {
+func (builder *ExaError) Mitigation(mitigation string) *ExaError {
 	builder.mitigation = mitigation
 	return builder
 }
 
-func (builder *ErrorMessageBuilder) String() string {
+func (builder *ExaError) String() string {
 	var stringBuilder strings.Builder
 	formattedMessage := formatMessage(builder)
 	stringBuilder.WriteString(fmt.Sprintf("%s: %s", builder.errorCode, formattedMessage))
@@ -52,11 +68,11 @@ func (builder *ErrorMessageBuilder) String() string {
 	return stringBuilder.String()
 }
 
-func (builder *ErrorMessageBuilder) Error() string  {
+func (builder *ExaError) Error() string  {
     return builder.String()
 }
 
-func formatMessage(builder *ErrorMessageBuilder) string {
+func formatMessage(builder *ExaError) string {
 	var formattedMessage = builder.message
 	for _, parameter := range builder.parameters {
 		formattedMessage = strings.Replace(formattedMessage, "{{"+parameter.name+"}}", "'"+parameter.value+"'", -1)

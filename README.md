@@ -7,7 +7,7 @@ This project contains a Go-Builder for Exasol error messages.
 ### Simple Messages
 
 ```go
-renderedString := error_reporting_go.ExaError("E-TEST-1").Message("Something went wrong.").String()
+renderedString := exaerror.New("E-TEST-1").Message("Something went wrong.").String()
 ```
 
 Result: `E-TEST-1: Something went wrong.`
@@ -15,7 +15,7 @@ Result: `E-TEST-1: Something went wrong.`
 ### As native go error
 
 ```go
-err := error_reporting_go.ExaError("E-TEST-1").Message("Something went wrong.")
+err := exaerror.New("E-TEST-1").Message("Something went wrong.")
 fmt.Println(err)  // fmt package can print errors automatically 
 fmt.Println(err.Error())  // Print error message explicit via Error() function
 ```
@@ -27,8 +27,15 @@ Result: `E-TEST-1: Something went wrong.`
 You can specify placeholders in the message and fill them up with parameters values:
 
 ```go
-renderedString := error_reporting_go.ExaError("E-TEST-2").Message("Unknown input {{input}}.").Parameter("input", "unknown").String()
+renderedString := exaerror.New("E-TEST-2").Message("Unknown input {{input}}.").Parameter("input", "unknown").String()
 ```
+
+or inline
+
+```go
+renderedString := exaerror.New("E-TEST-2").Messagef("Unknown input {{input}}.", "unknown").String()
+```
+
 
 Result: `E-TEST-2: Unknown input 'unknown'.`
 
@@ -38,7 +45,7 @@ The builder automatically quotes parameters with single quotes.
 If you want to avoid quotes, use the `|uq` suffix in the correspondent placeholder:
 
 ```go
-renderedString := error_reporting_go.ExaError("E-TEST-2").Message("Unknown input {{input|uq}}.").Parameter("input", 2).String()
+renderedString := exaerror.New("E-TEST-2").Message("Unknown input {{input|uq}}.").Parameter("input", 2).String()
 ```
 result: `E-TEST-2: Unknown input 2.`
 
@@ -47,7 +54,7 @@ result: `E-TEST-2: Unknown input 2.`
 The mitigations describe those actions the user can follow to overcome the error, and are specified as follows:
 
 ```go
-renderedString := error_reporting_go.ExaError("E-TEST-3").Message("Too little disk space.").Mitigation("Delete something.").String()
+renderedString := exaerror.New("E-TEST-3").Message("Too little disk space.").Mitigation("Delete something.").String()
 ```
 
 Result: `E-TEST-3: Too little disk space. Delete something.`
