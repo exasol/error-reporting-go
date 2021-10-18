@@ -90,3 +90,10 @@ func (suite *ExaErrorTestSuite) TestErrorMessagefCodeWithTooManyParameter() {
 	suite.Equal("E-TEST-2: Unknown input 'Value'.", renderedString)
 }
 
+func (suite *ExaErrorTestSuite) TestErrorMessagefCodeWithMultipleParameter() {
+	renderedString := exaerror.New("E-TEST-2").Messagef("Unknown input {{input}} and {{code}}.", "Value", 42).String()
+	suite.Equal("E-TEST-2: Unknown input 'Value' and '42'.", renderedString)
+}
+
+
+
