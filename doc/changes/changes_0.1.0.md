@@ -8,3 +8,5 @@ Code name: Initial implementation
 * #3: Added unquoted parameter support.
 * #7: Added go error interface.
 * #9: Renamed package to github.com/exasol/error-reporting-go.
+* #5: Add function `Messagef` for parameter directly in the function.
+* #11 Improve import of library via github.com/exasol/error-reporting-go.
