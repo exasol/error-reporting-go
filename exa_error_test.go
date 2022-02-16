@@ -1,9 +1,10 @@
 package exaerror_test
 
 import (
-	"github.com/exasol/error-reporting-go"
-	"github.com/stretchr/testify/suite"
 	"testing"
+
+	exaerror "github.com/exasol/error-reporting-go"
+	"github.com/stretchr/testify/suite"
 )
 
 type ExaErrorTestSuite struct {
@@ -72,12 +73,16 @@ func (suite *ExaErrorTestSuite) TestShouldImplementErrorInterface() {
 
 	suite.Error(err, "Error should not be nil")
 	suite.EqualError(err, "E-TEST-2: Unknown input.")
-
 }
 
 func (suite *ExaErrorTestSuite) TestErrorMessagefCodeWithStringParameter() {
 	renderedString := exaerror.New("E-TEST-2").Messagef("Unknown input {{input}}.", "Value").String()
 	suite.Equal("E-TEST-2: Unknown input 'Value'.", renderedString)
+}
+
+func (suite *ExaErrorTestSuite) TestErrorMessagefCodeWithUnqotedParameter() {
+	renderedString := exaerror.New("E-TEST-2").Messagef("Message with {{quoted}} and {{unquoted|uq}}.", "quoted", "unquoted").String()
+	suite.Equal("E-TEST-2: Message with 'quoted' and unquoted.", renderedString)
 }
 
 func (suite *ExaErrorTestSuite) TestErrorMessagefCodeWithMissingParameter() {
@@ -94,6 +99,3 @@ func (suite *ExaErrorTestSuite) TestErrorMessagefCodeWithMultipleParameter() {
 	renderedString := exaerror.New("E-TEST-2").Messagef("Unknown input {{input}} and {{code}}.", "Value", 42).String()
 	suite.Equal("E-TEST-2: Unknown input 'Value' and '42'.", renderedString)
 }
-
-
-
