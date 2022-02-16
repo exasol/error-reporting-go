@@ -2,7 +2,28 @@
 
 This project contains a Go-Builder for Exasol error messages.
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/exasol/error-reporting-go.svg)](https://pkg.go.dev/github.com/exasol/error-reporting-go)
+[![Build](https://github.com/exasol/error-reporting-go/actions/workflows/build.yml/badge.svg)](https://github.com/exasol/error-reporting-go/actions/workflows/build.yml)
+
 ## Usage
+
+### Including Go Error Reporting
+
+Add this to your `go.mod`:
+
+```
+require (
+    github.com/exasol/error-reporting-go v0.1.1
+)
+```
+
+Then import the library in your `.go` files:
+
+```go
+import (
+    exaerror "github.com/exasol/error-reporting-go"
+)
+```
 
 ### Simple Messages
 
@@ -35,7 +56,6 @@ or inline
 ```go
 renderedString := exaerror.New("E-TEST-2").Messagef("Unknown input {{input}}.", "unknown").String()
 ```
-
 
 Result: `E-TEST-2: Unknown input 'unknown'.`
 

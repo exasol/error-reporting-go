@@ -9,3 +9,7 @@ This release fixes the `Messagef()` function so that it respects the `|uq` tag f
 ## Bugfixes
 
 * #14: Fixed `Messagef()` function to respect the `|uq` tag
+
+## Documentation
+
+* #11: Described how to include this in other projects
