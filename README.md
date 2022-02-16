@@ -2,7 +2,33 @@
 
 This project contains a Go-Builder for Exasol error messages.
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/exasol/error-reporting-go.svg)](https://pkg.go.dev/github.com/exasol/error-reporting-go)
+[![Build](https://github.com/exasol/error-reporting-go/actions/workflows/build.yml/badge.svg)](https://github.com/exasol/error-reporting-go/actions/workflows/build.yml)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aerror-reporting-go&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=com.exasol%3Aerror-reporting-go)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aerror-reporting-go&metric=coverage)](https://sonarcloud.io/summary/new_code?id=com.exasol%3Aerror-reporting-go)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aerror-reporting-go&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=com.exasol%3Aerror-reporting-go)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aerror-reporting-go&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=com.exasol%3Aerror-reporting-go)
+
 ## Usage
+
+### Including Go Error Reporting
+
+Add this to your `go.mod`:
+
+```
+require (
+    github.com/exasol/error-reporting-go v0.1.1
+)
+```
+
+Then import the library in your `.go` files:
+
+```go
+import (
+    exaerror "github.com/exasol/error-reporting-go"
+)
+```
 
 ### Simple Messages
 
@@ -35,7 +61,6 @@ or inline
 ```go
 renderedString := exaerror.New("E-TEST-2").Messagef("Unknown input {{input}}.", "unknown").String()
 ```
-
 
 Result: `E-TEST-2: Unknown input 'unknown'.`
 

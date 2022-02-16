@@ -9,11 +9,13 @@ jobs:
   build:
     strategy:
       matrix:
-        go: ["1.16", "1.17" ]
+        go: [ "1.16", "1.17" ]
+    env:
+      DEFAULT_GO: "1.17"
     name: Build with go version ${{ matrix.go }}
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go
+      - name: Set up Go ${{ matrix.go }}
         uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go }}
@@ -24,16 +26,27 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Cache go modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ matrix.go }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ matrix.go }}-
+            ${{ runner.os }}-go-
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
         with:
-          version: v1.39
+          version: latest
 
       - name: test
         run: go test -coverprofile=coverage.out ./...
 
       - name: SonarCloud Scan
-        if: matrix.go == '1.17' && github.repository_owner == 'exasol'
+        if: matrix.go == env.DEFAULT_GO && github.repository_owner == 'exasol'
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

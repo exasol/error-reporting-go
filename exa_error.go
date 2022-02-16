@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-
-
 type ExaError struct {
 	errorCode  string
 	message    string
@@ -38,7 +36,8 @@ func (builder *ExaError) Messagef(format string, a ...interface{}) *ExaError {
 
 	for i, param := range a {
 		if i < len(paramNames) {
-			_ = builder.Parameter(paramNames[i][1], param)
+			paramName := strings.TrimSuffix(paramNames[i][1], "|uq")
+			_ = builder.Parameter(paramName, param)
 		}
 	}
 	return builder
@@ -68,8 +67,8 @@ func (builder *ExaError) String() string {
 	return stringBuilder.String()
 }
 
-func (builder *ExaError) Error() string  {
-    return builder.String()
+func (builder *ExaError) Error() string {
+	return builder.String()
 }
 
 func formatMessage(builder *ExaError) string {
