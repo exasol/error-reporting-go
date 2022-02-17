@@ -40,13 +40,13 @@ Result: `E-TEST-1: Something went wrong.`
 
 ### Error Identifiers
 
-The error identifier (`E-TEST-1` in the previous example) uniquely identify the error and consists of three parts:
+The error identifier (`E-TEST-1` in the previous example) uniquely identifies the error and consists of three parts:
 
 * Severity: `E` = Error, `F` = Failure, `W` = Warning
 * One or two tags separated with a dash `-` that identify the application or module, e.g. `MYAPP` or `MYAPP-MOD1`
 * An integer as index
 
-Tags and index must be unique to identify the error.
+Error Identifiers must be unique.
 
 See the [Error Code Model](https://github.com/exasol/error-code-model-java#readme) and the [Error Code Crawler](https://github.com/exasol/error-code-crawler-maven-plugin#readme) for details.
 
