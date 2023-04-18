@@ -7,11 +7,10 @@ import (
 )
 
 type ExaError struct {
-	errorCode       string
-	message         string
-	parameters      []parameter
-	mitigations     []string
-	mitigationCount int
+	errorCode   string
+	message     string
+	parameters  []parameter
+	mitigations []string
 }
 
 type parameter struct {
@@ -54,7 +53,6 @@ func (builder *ExaError) ParameterWithDescription(name string, value interface{}
 }
 
 func (builder *ExaError) Mitigation(mitigation string) *ExaError {
-	builder.mitigationCount += 1
 	builder.mitigations = append(builder.mitigations, mitigation)
 	return builder
 }
