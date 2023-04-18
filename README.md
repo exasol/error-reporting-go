@@ -2,6 +2,7 @@
 
 This project contains a Go-Builder for Exasol error messages.
 
+[![Build Status](https://github.com/exasol/error-reporting-go/actions/workflows/ci-build.yml/badge.svg)](https://github.com/exasol/error-reporting-go/actions/workflows/ci-build.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/exasol/error-reporting-go.svg)](https://pkg.go.dev/github.com/exasol/error-reporting-go)
 [![Build](https://github.com/exasol/error-reporting-go/actions/workflows/build.yml/badge.svg)](https://github.com/exasol/error-reporting-go/actions/workflows/build.yml)
 
@@ -42,9 +43,9 @@ Result: `E-TEST-1: Something went wrong.`
 
 The error identifier (`E-TEST-1` in the previous example) uniquely identifies the error and consists of three parts:
 
-* Severity: `E` = Error, `F` = Failure, `W` = Warning
-* One or two tags separated with a dash `-` that identify the application or module, e.g. `MYAPP` or `MYAPP-MOD1`
-* An integer as index
+- Severity: `E` = Error, `F` = Failure, `W` = Warning
+- One or two tags separated with a dash `-` that identify the application or module, e.g. `MYAPP` or `MYAPP-MOD1`
+- An integer as index
 
 Error Identifiers must be unique.
 
@@ -54,7 +55,7 @@ See the [Error Code Model](https://github.com/exasol/error-code-model-java#readm
 
 ```go
 err := exaerror.New("E-TEST-1").Message("Something went wrong.")
-fmt.Println(err)  // fmt package can print errors automatically 
+fmt.Println(err)  // fmt package can print errors automatically
 fmt.Println(err.Error())  // Print error message explicit via Error() function
 ```
 
@@ -84,9 +85,10 @@ If you want to avoid quotes, use the `|uq` suffix in the correspondent placehold
 ```go
 renderedString := exaerror.New("E-TEST-2").Message("Unknown input {{input|uq}}.").Parameter("input", 2).String()
 ```
+
 result: `E-TEST-2: Unknown input 2.`
 
-### Mitigations  
+### Mitigations
 
 The mitigations describe those actions the user can follow to overcome the error, and are specified as follows:
 
@@ -98,4 +100,5 @@ Result: `E-TEST-3: Too little disk space. Delete something.`
 
 ## Additional Resources
 
-* [Changelog](doc/changes/changelog.md)
+- [Changelog](doc/changes/changelog.md)
+- [Dependencies](dependencies.md)
