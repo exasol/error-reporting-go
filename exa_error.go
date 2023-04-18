@@ -7,10 +7,11 @@ import (
 )
 
 type ExaError struct {
-	errorCode  string
-	message    string
-	parameters []parameter
-	mitigation string
+	errorCode       string
+	message         string
+	parameters      []parameter
+	mitigations     []string
+	mitigationCount int
 }
 
 type parameter struct {
@@ -53,7 +54,8 @@ func (builder *ExaError) ParameterWithDescription(name string, value interface{}
 }
 
 func (builder *ExaError) Mitigation(mitigation string) *ExaError {
-	builder.mitigation = mitigation
+	builder.mitigationCount += 1
+	builder.mitigations = append(builder.mitigations, mitigation)
 	return builder
 }
 
@@ -61,9 +63,24 @@ func (builder *ExaError) String() string {
 	var stringBuilder strings.Builder
 	formattedMessage := formatMessage(builder)
 	stringBuilder.WriteString(fmt.Sprintf("%s: %s", builder.errorCode, formattedMessage))
-	if len(builder.mitigation) > 0 {
-		stringBuilder.WriteString(fmt.Sprintf(" %s", builder.mitigation))
+
+	if len(builder.mitigations) > 0 {
+		var mitigationString string
+		if len(builder.mitigations) == 1 {
+			mitigationString = ""
+			for _, mitigation := range builder.mitigations {
+				mitigationString += mitigation
+			}
+		} else {
+			mitigationString = "Known mitigations:"
+			for _, mitigation := range builder.mitigations {
+				mitigationString += "\n" + "* " + mitigation
+			}
+		}
+		formattedMitigation := formatMitigation(builder, mitigationString)
+		stringBuilder.WriteString(fmt.Sprintf(" %s", formattedMitigation))
 	}
+
 	return stringBuilder.String()
 }
 
@@ -78,4 +95,12 @@ func formatMessage(builder *ExaError) string {
 		formattedMessage = strings.Replace(formattedMessage, "{{"+parameter.name+"|uq}}", parameter.value, -1)
 	}
 	return formattedMessage
+}
+func formatMitigation(builder *ExaError, mitigationString string) string {
+	var formattedMitigation = mitigationString
+	for _, parameter := range builder.parameters {
+		formattedMitigation = strings.Replace(formattedMitigation, "{{"+parameter.name+"}}", "'"+parameter.value+"'", -1)
+		formattedMitigation = strings.Replace(formattedMitigation, "{{"+parameter.name+"|uq}}", parameter.value, -1)
+	}
+	return formattedMitigation
 }
