@@ -4,7 +4,6 @@ This project contains a Go-Builder for Exasol error messages.
 
 [![Build Status](https://github.com/exasol/error-reporting-go/actions/workflows/ci-build.yml/badge.svg)](https://github.com/exasol/error-reporting-go/actions/workflows/ci-build.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/exasol/error-reporting-go.svg)](https://pkg.go.dev/github.com/exasol/error-reporting-go)
-[![Build](https://github.com/exasol/error-reporting-go/actions/workflows/build.yml/badge.svg)](https://github.com/exasol/error-reporting-go/actions/workflows/build.yml)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aerror-reporting-go&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=com.exasol%3Aerror-reporting-go)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aerror-reporting-go&metric=coverage)](https://sonarcloud.io/summary/new_code?id=com.exasol%3Aerror-reporting-go)
