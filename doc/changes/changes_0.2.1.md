@@ -1,12 +1,10 @@
-# Error Reporting go 0.2.1, released 2026-??-??
+# Error Reporting go 0.2.1, released 2026-06-24
 
-Code name:
+Code name: Upgrade Depenencies
 
 ## Summary
 
-## Features
-
-* ISSUE_NUMBER: description
+This release updates dependencies, fixes linter warnings and upgrades Go from 1.16 to 1.25.
 
 ## Dependency Updates
 
