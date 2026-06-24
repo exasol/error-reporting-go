@@ -21,3 +21,4 @@ pom.xml.versionsBackup
 *.md.html
 *.flattened-pom.xml
 /coverage.out
+/.scannerwork/
