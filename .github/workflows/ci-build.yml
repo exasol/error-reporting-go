@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  matrix-build:
     strategy:
       matrix:
         go: [ "1.25", "1.26" ]
@@ -31,6 +31,7 @@ jobs:
           cache: true
 
       - name: golangci-lint
+        if: matrix.go == env.DEFAULT_GO
         uses: golangci/golangci-lint-action@82606bf257cbaff209d206a39f5134f0cfbfd2ee # v9.2.1
         with:
           version: latest
@@ -39,17 +40,30 @@ jobs:
         run: go test -coverprofile=coverage.out ./...
 
       - name: SonarCloud Scan
-        if: matrix.go == env.DEFAULT_GO && github.repository_owner == 'exasol'
+        if: matrix.go == env.DEFAULT_GO && env.SONAR_TOKEN != ''
         uses: SonarSource/sonarqube-scan-action@713881670b6b3676cda39549040e2d88c70d582e # v8.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Install vulncheck
+        if: matrix.go == env.DEFAULT_GO
         run: go install golang.org/x/vuln/cmd/govulncheck@latest
 
       - name: Print vulncheck version
+        if: matrix.go == env.DEFAULT_GO
         run: govulncheck -version
 
       - name: Run vulnerability check
+        if: matrix.go == env.DEFAULT_GO
         run: govulncheck -format text -mode source -scan symbol -show verbose -test ./...
+
+
+  build:
+    name: Build
+    runs-on: ubuntu-slim
+    needs: matrix-build
+    permissions:
+      contents: read
+    steps:
+      - run: echo "Build successful"
