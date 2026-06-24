@@ -60,7 +60,7 @@ func (builder *ExaError) Mitigation(mitigation string) *ExaError {
 func (builder *ExaError) String() string {
 	var stringBuilder strings.Builder
 	formattedMessage := formatMessage(builder)
-	stringBuilder.WriteString(fmt.Sprintf("%s: %s", builder.errorCode, formattedMessage))
+	fmt.Fprintf(&stringBuilder, "%s: %s", builder.errorCode, formattedMessage)
 
 	if len(builder.mitigations) > 0 {
 		var mitigationString string
@@ -76,7 +76,7 @@ func (builder *ExaError) String() string {
 			}
 		}
 		formattedMitigation := formatMitigation(builder, mitigationString)
-		stringBuilder.WriteString(fmt.Sprintf(" %s", formattedMitigation))
+		fmt.Fprintf(&stringBuilder, " %s", formattedMitigation)
 	}
 
 	return stringBuilder.String()
@@ -89,16 +89,16 @@ func (builder *ExaError) Error() string {
 func formatMessage(builder *ExaError) string {
 	var formattedMessage = builder.message
 	for _, parameter := range builder.parameters {
-		formattedMessage = strings.Replace(formattedMessage, "{{"+parameter.name+"}}", "'"+parameter.value+"'", -1)
-		formattedMessage = strings.Replace(formattedMessage, "{{"+parameter.name+"|uq}}", parameter.value, -1)
+		formattedMessage = strings.ReplaceAll(formattedMessage, "{{"+parameter.name+"}}", "'"+parameter.value+"'")
+		formattedMessage = strings.ReplaceAll(formattedMessage, "{{"+parameter.name+"|uq}}", parameter.value)
 	}
 	return formattedMessage
 }
 func formatMitigation(builder *ExaError, mitigationString string) string {
 	var formattedMitigation = mitigationString
 	for _, parameter := range builder.parameters {
-		formattedMitigation = strings.Replace(formattedMitigation, "{{"+parameter.name+"}}", "'"+parameter.value+"'", -1)
-		formattedMitigation = strings.Replace(formattedMitigation, "{{"+parameter.name+"|uq}}", parameter.value, -1)
+		formattedMitigation = strings.ReplaceAll(formattedMitigation, "{{"+parameter.name+"}}", "'"+parameter.value+"'")
+		formattedMitigation = strings.ReplaceAll(formattedMitigation, "{{"+parameter.name+"|uq}}", parameter.value)
 	}
 	return formattedMitigation
 }
